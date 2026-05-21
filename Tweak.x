@@ -1,4 +1,5 @@
 #import "WCMediaStack.h"
+#import <UIKit/UIKit.h>
 
 static BOOL enableMediaStack = YES;
 static BOOL enableAntiRecall = YES;
@@ -54,31 +55,6 @@ static void loadSettings() {
 
 %end
 
-@interface SettingsTableViewController : UIViewController
-@end
-
-%hook SettingsTableViewController
-
-- (void)viewDidLoad {
-    %orig;
-    
-    NSLog(@"[WXTool] Hooked SettingsTableViewController viewDidLoad");
-    
-    UIViewController *prefsVC = [[NSClassFromString(@"WXRootListController") alloc] init];
-    
-    if (prefsVC) {
-        NSLog(@"[WXTool] ✓ WXRootListController loaded successfully");
-    } else {
-        NSLog(@"[WXTool] ✗ WXRootListController not found");
-    }
-}
-
-%end
-
-@interface UIViewController (WXTool)
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
-@end
-
 %ctor {
     loadSettings();
     
@@ -91,4 +67,11 @@ static void loadSettings() {
     NSLog(@"[WXTool] ✓ Hook targets:");
     NSLog(@"[WXTool]   - MsgMediaGroupMgr::enableFlag");
     NSLog(@"[WXTool]   - CMessageMgr::onRevokeMsg/onRevokeMessage/RevokeMsg");
+    
+    Class prefsClass = NSClassFromString(@"WXRootListController");
+    if (prefsClass) {
+        NSLog(@"[WXTool] ✓ WXRootListController class found");
+    } else {
+        NSLog(@"[WXTool] ✗ WXRootListController class NOT found");
+    }
 }
