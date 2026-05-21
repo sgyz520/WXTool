@@ -1,4 +1,4 @@
-# WXTool - 微信工具箱
+# WXTool - 微信增强插件
 
 [![Build](https://github.com/sgyz520/WXTool/actions/workflows/build.yml/badge.svg)](https://github.com/sgyz520/WXTool/actions/workflows/build.yml)
 

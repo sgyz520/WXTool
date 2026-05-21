@@ -25,8 +25,8 @@ jobs:
       - name: Setup iOS SDK
         run: |
           sudo mkdir -p /opt/theos/sdks
-          curl -L https://github.com/ProcursusTeam/iPhoneOS.sdk/releases/download/16.5/iPhoneOS16.5.sdk.tar.xz -o /tmp/sdk.tar.xz
-          sudo tar -xf /tmp/sdk.tar.xz -C /opt/theos/sdks
+          SDK_PATH=$(xcrun --sdk iphoneos --show-sdk-path 2>/dev/null)
+          sudo ln -s "$SDK_PATH" /opt/theos/sdks/iPhoneOS16.5.sdk
 
       - name: Build Package
         run: |
@@ -60,8 +60,8 @@ jobs:
       - name: Setup iOS SDK
         run: |
           sudo mkdir -p /opt/theos/sdks
-          curl -L https://github.com/ProcursusTeam/iPhoneOS.sdk/releases/download/16.5/iPhoneOS16.5.sdk.tar.xz -o /tmp/sdk.tar.xz
-          sudo tar -xf /tmp/sdk.tar.xz -C /opt/theos/sdks
+          SDK_PATH=$(xcrun --sdk iphoneos --show-sdk-path 2>/dev/null)
+          sudo ln -s "$SDK_PATH" /opt/theos/sdks/iPhoneOS16.5.sdk
 
       - name: Build Package (roothide)
         run: |
