@@ -15,15 +15,20 @@ TWEAK_NAME = WXTool
 WXTool_CFLAGS = -fobjc-arc \
                 -DVERSION_STRING=\"$(PACKAGE_VERSION)\"
 
-WXTool_FILES = Tweak.x EntryController.x
+WXTool_FILES = Tweak.x
 
 WXTool_FRAMEWORKS = UIKit
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/tweak.mk
 
+# Preference Bundle
+BUNDLE_NAME = WXTool
+WXTool_FILES = EntryController.x
+WXTool_FRAMEWORKS = UIKit
 WXTool_INSTALL_PATH = /Library/PreferenceBundles
-WXTool_EXTRA_INSTALL_STAGES = bundle
+
+include $(THEOS_MAKE_PATH)/bundle.mk
 
 internal-after-install::
 	install.exec "killall -9 SpringBoard"
