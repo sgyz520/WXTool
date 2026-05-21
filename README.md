@@ -37,11 +37,8 @@ WXTool/
 ### 本地构建
 
 ```bash
-# rootless（默认）
+# 默认构建
 make clean package
-
-# roothide
-make clean package SCHEME=roothide
 
 # 指定 Theos 路径
 make clean package THEOS=/path/to/theos

@@ -3,13 +3,6 @@ TARGET = iphone:clang:16.5:14.0
 ARCHS = arm64 arm64e
 
 #export THEOS=/Users/shizhujianliang/theos
-#export THEOS_PACKAGE_SCHEME=roothide
-
-ifeq ($(SCHEME),roothide)
-    export THEOS_PACKAGE_SCHEME = roothide
-else ifeq ($(SCHEME),rootless)
-    export THEOS_PACKAGE_SCHEME = rootless
-endif
 
 export DEBUG = 0
 

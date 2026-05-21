@@ -9,8 +9,8 @@ on:
     types: [ published ]
 
 jobs:
-  build-rootless:
-    name: Build (rootless)
+  build:
+    name: Build
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -35,7 +35,7 @@ jobs:
       - name: Upload .deb Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WXTool-rootless
+          name: WXTool
           path: packages/*.deb
 
       - name: Upload .deb to Release
@@ -43,32 +43,3 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: packages/*.deb
-
-  build-roothide:
-    name: Build (roothide)
-    runs-on: macos-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Theos
-        run: |
-          sudo mkdir -p /opt/theos
-          sudo chown $(whoami) /opt/theos
-          git clone --recursive --depth 1 https://github.com/theos/theos.git /opt/theos
-
-      - name: Setup iOS SDK
-        run: |
-          sudo mkdir -p /opt/theos/sdks
-          SDK_PATH=$(xcrun --sdk iphoneos --show-sdk-path 2>/dev/null)
-          sudo ln -s "$SDK_PATH" /opt/theos/sdks/iPhoneOS16.5.sdk
-
-      - name: Build Package (roothide)
-        run: |
-          make clean package SCHEME=roothide THEOS=/opt/theos
-
-      - name: Upload .deb Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: WXTool-roothide
-          path: packages/*.deb
