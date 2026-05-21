@@ -54,6 +54,31 @@ static void loadSettings() {
 
 %end
 
+@interface SettingsTableViewController : UIViewController
+@end
+
+%hook SettingsTableViewController
+
+- (void)viewDidLoad {
+    %orig;
+    
+    NSLog(@"[WXTool] Hooked SettingsTableViewController viewDidLoad");
+    
+    UIViewController *prefsVC = [[NSClassFromString(@"WXRootListController") alloc] init];
+    
+    if (prefsVC) {
+        NSLog(@"[WXTool] ✓ WXRootListController loaded successfully");
+    } else {
+        NSLog(@"[WXTool] ✗ WXRootListController not found");
+    }
+}
+
+%end
+
+@interface UIViewController (WXTool)
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated;
+@end
+
 %ctor {
     loadSettings();
     

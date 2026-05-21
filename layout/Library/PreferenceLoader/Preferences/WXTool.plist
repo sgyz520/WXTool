@@ -6,16 +6,12 @@
 	<dict>
 		<key>bundle</key>
 		<string>WXToolPrefs</string>
-		<key>bundlePath</key>
-		<string>/Library/PreferenceBundles/WXToolPrefs.bundle</string>
 		<key>cell</key>
 		<string>PSLinkCell</string>
 		<key>detail</key>
 		<string>WXRootListController</string>
 		<key>icon</key>
 		<string>icon.png</string>
-		<key>isController</key>
-		<true/>
 		<key>label</key>
 		<string>WXTool</string>
 	</dict>
