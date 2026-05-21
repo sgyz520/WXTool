@@ -25,13 +25,17 @@ include $(THEOS_MAKE_PATH)/tweak.mk
 after-package::
 	@echo "==> Building Preference Bundle..."
 	@mkdir -p $(THEOS)/obj/WXTool.bundle
-	@$(THEOS)/bin/xmllint --version >/dev/null 2>&1 || true
-	@clang -dynamiclib -isysroot $(THEOS)/sdks/iPhoneOS16.5.sdk \
+	@clang -x objective-c -c -isysroot $(THEOS)/sdks/iPhoneOS16.5.sdk \
 		-arch arm64 -arch arm64e \
 		-fobjc-arc \
 		-DVERSION_STRING=\"$(PACKAGE_VERSION)\" \
 		-framework UIKit \
 		EntryController.x \
+		-o $(THEOS)/obj/EntryController.o
+	@clang -dynamiclib -isysroot $(THEOS)/sdks/iPhoneOS16.5.sdk \
+		-arch arm64 -arch arm64e \
+		$(THEOS)/obj/EntryController.o \
+		-framework UIKit \
 		-o $(THEOS)/obj/WXTool.bundle/WXTool
 	@mkdir -p layout/Library/PreferenceBundles/WXTool.bundle
 	@cp $(THEOS)/obj/WXTool.bundle/WXTool layout/Library/PreferenceBundles/WXTool.bundle/
