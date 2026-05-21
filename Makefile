@@ -2,8 +2,6 @@ SYSROOT = $(THEOS)/sdks/iPhoneOS16.5.sdk
 TARGET = iphone:clang:16.5:14.0
 ARCHS = arm64 arm64e
 
-#export THEOS=/Users/shizhujianliang/theos
-
 export DEBUG = 0
 
 INSTALL_TARGET_PROCESSES = WeChat
@@ -21,27 +19,14 @@ WXTool_FRAMEWORKS = UIKit
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/tweak.mk
 
-# Build bundle BEFORE packaging
-before-package::
-	@echo "==> Building Preference Bundle..."
-	@mkdir -p $(THEOS)/obj/WXTool.bundle
-	@clang -x objective-c -c -isysroot $(THEOS)/sdks/iPhoneOS16.5.sdk \
-		-arch arm64 -arch arm64e \
-		-fobjc-arc \
-		-DVERSION_STRING=\"$(PACKAGE_VERSION)\" \
-		-framework UIKit -framework Foundation \
-		EntryController.x \
-		-o $(THEOS)/obj/EntryController.o
-	@clang -dynamiclib -isysroot $(THEOS)/sdks/iPhoneOS16.5.sdk \
-		-arch arm64 -arch arm64e \
-		$(THEOS)/obj/EntryController.o \
-		-framework UIKit -framework Foundation \
-		-o $(THEOS)/obj/WXTool.bundle/WXTool
-	@mkdir -p layout/Library/PreferenceBundles/WXTool.bundle
-	@cp $(THEOS)/obj/WXTool.bundle/WXTool layout/Library/PreferenceBundles/WXTool.bundle/
-	@cp Resources/Info.plist layout/Library/PreferenceBundles/WXTool.bundle/
-	@cp Resources/icon.png layout/Library/PreferenceBundles/WXTool.bundle/
-	@cp Resources/entry.plist layout/Library/PreferenceLoader/Preferences/WXTool.plist
+# Bundle configuration
+BUNDLE_NAME = WXTool
+$(BUNDLE_NAME)_FILES = EntryController.x
+$(BUNDLE_NAME)_FRAMEWORKS = UIKit Foundation
+$(BUNDLE_NAME)_CFLAGS = -fobjc-arc -DVERSION_STRING=\"$(PACKAGE_VERSION)\"
+$(BUNDLE_NAME)_INSTALL_PATH = /Library/PreferenceBundles
+
+include $(THEOS_MAKE_PATH)/bundle.mk
 
 internal-after-install::
 	install.exec "killall -9 SpringBoard"
