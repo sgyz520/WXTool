@@ -32,6 +32,11 @@ jobs:
           SDK_PATH=$(xcrun --sdk iphoneos --show-sdk-path 2>/dev/null)
           sudo ln -s "$SDK_PATH" /opt/theos/sdks/iPhoneOS16.5.sdk
 
+      - name: Setup Preferences Framework
+        run: |
+          mkdir -p /opt/theos/lib
+          curl -L https://github.com/xybp888/iOS-SDKs/raw/master/PrivateFrameworks/Preferences.framework/Preferences.tbd -o /opt/theos/lib/Preferences.tbd
+
       - name: Build Package
         run: |
           make clean package THEOS=/opt/theos

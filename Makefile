@@ -18,6 +18,7 @@ WXTool_CFLAGS = -fobjc-arc \
 WXTool_FILES = Tweak.x EntryController.x
 
 WXTool_FRAMEWORKS = UIKit
+WXTool_PRIVATE_FRAMEWORKS = Preferences
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/tweak.mk
