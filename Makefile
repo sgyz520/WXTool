@@ -21,8 +21,8 @@ WXTool_FRAMEWORKS = UIKit
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/tweak.mk
 
-# Build bundle manually
-after-package::
+# Build bundle BEFORE packaging
+before-package::
 	@echo "==> Building Preference Bundle..."
 	@mkdir -p $(THEOS)/obj/WXTool.bundle
 	@clang -x objective-c -c -isysroot $(THEOS)/sdks/iPhoneOS16.5.sdk \
