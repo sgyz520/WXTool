@@ -6,6 +6,8 @@
 	<dict>
 		<key>bundle</key>
 		<string>WXTool</string>
+		<key>bundlePath</key>
+		<string>/Library/PreferenceBundles/WXTool.bundle</string>
 		<key>cell</key>
 		<string>PSLinkCell</string>
 		<key>detail</key>
