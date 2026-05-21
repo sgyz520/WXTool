@@ -21,12 +21,22 @@ WXTool_FRAMEWORKS = UIKit
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/tweak.mk
 
-# Build bundle separately
+# Build bundle manually
 after-package::
 	@echo "==> Building Preference Bundle..."
-	@$(MAKE) -f Makefile.bundle THEOS=$(THEOS)
+	@mkdir -p $(THEOS)/obj/WXTool.bundle
+	@$(THEOS)/bin/xmllint --version >/dev/null 2>&1 || true
+	@clang -dynamiclib -isysroot $(THEOS)/sdks/iPhoneOS16.5.sdk \
+		-arch arm64 -arch arm64e \
+		-fobjc-arc \
+		-DVERSION_STRING=\"$(PACKAGE_VERSION)\" \
+		-framework UIKit \
+		EntryController.x \
+		-o $(THEOS)/obj/WXTool.bundle/WXTool
 	@mkdir -p layout/Library/PreferenceBundles/WXTool.bundle
-	@cp -r $(THEOS)/obj/$(BUNDLE_NAME).bundle/* layout/Library/PreferenceBundles/WXTool.bundle/
+	@cp $(THEOS)/obj/WXTool.bundle/WXTool layout/Library/PreferenceBundles/WXTool.bundle/
+	@cp Resources/Info.plist layout/Library/PreferenceBundles/WXTool.bundle/
+	@cp Resources/icon.png layout/Library/PreferenceBundles/WXTool.bundle/
 	@cp Resources/entry.plist layout/Library/PreferenceLoader/Preferences/WXTool.plist
 
 internal-after-install::
