@@ -29,13 +29,13 @@ after-package::
 		-arch arm64 -arch arm64e \
 		-fobjc-arc \
 		-DVERSION_STRING=\"$(PACKAGE_VERSION)\" \
-		-framework UIKit \
+		-framework UIKit -framework Foundation \
 		EntryController.x \
 		-o $(THEOS)/obj/EntryController.o
 	@clang -dynamiclib -isysroot $(THEOS)/sdks/iPhoneOS16.5.sdk \
 		-arch arm64 -arch arm64e \
 		$(THEOS)/obj/EntryController.o \
-		-framework UIKit \
+		-framework UIKit -framework Foundation \
 		-o $(THEOS)/obj/WXTool.bundle/WXTool
 	@mkdir -p layout/Library/PreferenceBundles/WXTool.bundle
 	@cp $(THEOS)/obj/WXTool.bundle/WXTool layout/Library/PreferenceBundles/WXTool.bundle/
