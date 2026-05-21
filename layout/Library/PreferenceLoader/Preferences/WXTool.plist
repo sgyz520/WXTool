@@ -5,7 +5,7 @@
 	<key>entry</key>
 	<dict>
 		<key>bundle</key>
-		<string>WXTool</string>
+		<string>WXTool.bundle</string>
 		<key>cell</key>
 		<string>PSLinkCell</string>
 		<key>detail</key>
