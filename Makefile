@@ -13,7 +13,6 @@ TWEAK_NAME = WXTool
 
 # Feature flags (add -DENABLE_XXX to enable a feature)
 WXTool_CFLAGS = -fobjc-arc \
-                -mllvm -enable-allobf \
                 -DVERSION_STRING=\"$(PACKAGE_VERSION)\" \
                 -DENABLE_MEDIA_STACK \
                 -DENABLE_ANTI_RECALL
