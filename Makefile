@@ -23,7 +23,6 @@ include $(THEOS_MAKE_PATH)/tweak.mk
 BUNDLE_NAME = WXToolPrefs
 $(BUNDLE_NAME)_FILES = EntryController.x
 $(BUNDLE_NAME)_FRAMEWORKS = UIKit Foundation
-$(BUNDLE_NAME)_PRIVATE_FRAMEWORKS = Preferences
 $(BUNDLE_NAME)_CFLAGS = -fobjc-arc -DVERSION_STRING=\"$(PACKAGE_VERSION)\"
 $(BUNDLE_NAME)_INSTALL_PATH = /Library/PreferenceBundles
 
