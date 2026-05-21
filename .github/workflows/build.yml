@@ -22,6 +22,10 @@ jobs:
           sudo chown $(whoami) /opt/theos
           git clone --recursive --depth 1 https://github.com/theos/theos.git /opt/theos
 
+      - name: Install ldid
+        run: |
+          brew install ldid
+
       - name: Setup iOS SDK
         run: |
           sudo mkdir -p /opt/theos/sdks
