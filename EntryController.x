@@ -28,43 +28,29 @@
         
         NSMutableArray *array = [[NSMutableArray alloc] init];
         
-        PSSpecifier *group1 = [PSSpecifier emptyGroupSpecifier];
-        [group1 setProperty:@"功能开关" forKey:@"label"];
-        [group1 setProperty:@"修改后需要重启微信生效" forKey:@"footerText"];
+        PSSpecifier *group1 = [[PSSpecifier alloc] initWithDictionary:@{@"cell": @"PSGroupCell", @"label": @"功能开关", @"footerText": @"修改后需要重启微信生效"}];
         [array addObject:group1];
         
-        PSSpecifier *switch1 = [PSSpecifier preferenceSpecifierNamed:@"图片堆叠" target:nil set:nil get:nil detail:nil cell:PSCellTypeSwitch edit:nil];
-        [switch1 setProperty:@"com.shizhujianliang.wxtool" forKey:@"defaults"];
-        [switch1 setProperty:@"enableMediaStack" forKey:@"key"];
-        [switch1 setProperty:@YES forKey:@"default"];
-        [switch1 setProperty:@"com.shizhujianliang.wxtool/settingsChanged" forKey:@"PostNotification"];
+        PSSpecifier *switch1 = [[PSSpecifier alloc] initWithDictionary:@{@"cell": @"PSSwitchCell", @"defaults": @"com.shizhujianliang.wxtool", @"key": @"enableMediaStack", @"default": @YES, @"label": @"图片堆叠", @"PostNotification": @"com.shizhujianliang.wxtool/settingsChanged"}];
         [array addObject:switch1];
         
-        PSSpecifier *switch2 = [PSSpecifier preferenceSpecifierNamed:@"消息防撤回" target:nil set:nil get:nil detail:nil cell:PSCellTypeSwitch edit:nil];
-        [switch2 setProperty:@"com.shizhujianliang.wxtool" forKey:@"defaults"];
-        [switch2 setProperty:@"enableAntiRecall" forKey:@"key"];
-        [switch2 setProperty:@YES forKey:@"default"];
-        [switch2 setProperty:@"com.shizhujianliang.wxtool/settingsChanged" forKey:@"PostNotification"];
+        PSSpecifier *switch2 = [[PSSpecifier alloc] initWithDictionary:@{@"cell": @"PSSwitchCell", @"defaults": @"com.shizhujianliang.wxtool", @"key": @"enableAntiRecall", @"default": @YES, @"label": @"消息防撤回", @"PostNotification": @"com.shizhujianliang.wxtool/settingsChanged"}];
         [array addObject:switch2];
         
-        PSSpecifier *group2 = [PSSpecifier emptyGroupSpecifier];
-        [group2 setProperty:@"关于" forKey:@"label"];
+        PSSpecifier *group2 = [[PSSpecifier alloc] initWithDictionary:@{@"cell": @"PSGroupCell", @"label": @"关于"}];
         [array addObject:group2];
         
-        PSSpecifier *version = [PSSpecifier preferenceSpecifierNamed:@"版本" target:nil set:nil get:nil detail:nil cell:PSCellTypeStaticText edit:nil];
-        [version setProperty:@"1.1.0" forKey:@"labelValue"];
+        PSSpecifier *version = [[PSSpecifier alloc] initWithDictionary:@{@"cell": @"PSStaticTextCell", @"label": @"版本", @"labelValue": @"1.1.0"}];
         [array addObject:version];
         
-        PSSpecifier *author = [PSSpecifier preferenceSpecifierNamed:@"作者" target:nil set:nil get:nil detail:nil cell:PSCellTypeStaticText edit:nil];
-        [author setProperty:@"施主见谅" forKey:@"labelValue"];
+        PSSpecifier *author = [[PSSpecifier alloc] initWithDictionary:@{@"cell": @"PSStaticTextCell", @"label": @"作者", @"labelValue": @"施主见谅"}];
         [array addObject:author];
         
-        PSSpecifier *button = [PSSpecifier preferenceSpecifierNamed:@"加入 QQ 交流群" target:self set:nil get:nil detail:nil cell:PSCellTypeButton edit:nil];
-        [button setProperty:@"joinQQGroup" forKey:@"action"];
+        PSSpecifier *button = [[PSSpecifier alloc] initWithDictionary:@{@"cell": @"PSButtonCell", @"label": @"加入 QQ 交流群", @"action": @"joinQQGroup"}];
+        [button setTarget:self];
         [array addObject:button];
         
-        PSSpecifier *group3 = [PSSpecifier emptyGroupSpecifier];
-        [group3 setProperty:@"公众号：施主见谅" forKey:@"footerText"];
+        PSSpecifier *group3 = [[PSSpecifier alloc] initWithDictionary:@{@"cell": @"PSGroupCell", @"footerText": @"公众号：施主见谅"}];
         [array addObject:group3];
         
         _specifiers = array;
