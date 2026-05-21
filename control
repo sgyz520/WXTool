@@ -1,0 +1,9 @@
+Package: com.shizhujianliang.wxtool
+Name: WXTool
+Version: 1.1.0
+Architecture: iphoneos-arm
+Description: 微信工具箱 - 图片堆叠、消息防撤回
+Maintainer: 施主见谅
+Author: 施主见谅
+Section: Tweaks
+Depends: mobilesubstrate (>= 0.9.5000)
