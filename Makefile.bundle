@@ -1,0 +1,16 @@
+SYSROOT = $(THEOS)/sdks/iPhoneOS16.5.sdk
+TARGET = iphone:clang:16.5:14.0
+ARCHS = arm64 arm64e
+
+export DEBUG = 0
+
+PACKAGE_VERSION = 1.1.0
+BUNDLE_NAME = WXTool
+
+WXTool_CFLAGS = -fobjc-arc -DVERSION_STRING=\"$(PACKAGE_VERSION)\"
+WXTool_FILES = EntryController.x
+WXTool_FRAMEWORKS = UIKit
+WXTool_INSTALL_PATH = /Library/PreferenceBundles
+
+include $(THEOS)/makefiles/common.mk
+include $(THEOS_MAKE_PATH)/bundle.mk
