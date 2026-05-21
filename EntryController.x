@@ -33,14 +33,14 @@
         [group1 setProperty:@"修改后需要重启微信生效" forKey:@"footerText"];
         [array addObject:group1];
         
-        PSSpecifier *switch1 = [PSSpecifier preferenceSpecifierNamed:@"图片堆叠" target:nil set:nil get:nil detail:nil cell:@"PSSwitchCell" edit:nil];
+        PSSpecifier *switch1 = [PSSpecifier preferenceSpecifierNamed:@"图片堆叠" target:nil set:nil get:nil detail:nil cell:PSCellTypeSwitch edit:nil];
         [switch1 setProperty:@"com.shizhujianliang.wxtool" forKey:@"defaults"];
         [switch1 setProperty:@"enableMediaStack" forKey:@"key"];
         [switch1 setProperty:@YES forKey:@"default"];
         [switch1 setProperty:@"com.shizhujianliang.wxtool/settingsChanged" forKey:@"PostNotification"];
         [array addObject:switch1];
         
-        PSSpecifier *switch2 = [PSSpecifier preferenceSpecifierNamed:@"消息防撤回" target:nil set:nil get:nil detail:nil cell:@"PSSwitchCell" edit:nil];
+        PSSpecifier *switch2 = [PSSpecifier preferenceSpecifierNamed:@"消息防撤回" target:nil set:nil get:nil detail:nil cell:PSCellTypeSwitch edit:nil];
         [switch2 setProperty:@"com.shizhujianliang.wxtool" forKey:@"defaults"];
         [switch2 setProperty:@"enableAntiRecall" forKey:@"key"];
         [switch2 setProperty:@YES forKey:@"default"];
@@ -51,15 +51,15 @@
         [group2 setProperty:@"关于" forKey:@"label"];
         [array addObject:group2];
         
-        PSSpecifier *version = [PSSpecifier preferenceSpecifierNamed:@"版本" target:nil set:nil get:nil detail:nil cell:@"PSStaticTextCell" edit:nil];
+        PSSpecifier *version = [PSSpecifier preferenceSpecifierNamed:@"版本" target:nil set:nil get:nil detail:nil cell:PSCellTypeStaticText edit:nil];
         [version setProperty:@"1.1.0" forKey:@"labelValue"];
         [array addObject:version];
         
-        PSSpecifier *author = [PSSpecifier preferenceSpecifierNamed:@"作者" target:nil set:nil get:nil detail:nil cell:@"PSStaticTextCell" edit:nil];
+        PSSpecifier *author = [PSSpecifier preferenceSpecifierNamed:@"作者" target:nil set:nil get:nil detail:nil cell:PSCellTypeStaticText edit:nil];
         [author setProperty:@"施主见谅" forKey:@"labelValue"];
         [array addObject:author];
         
-        PSSpecifier *button = [PSSpecifier preferenceSpecifierNamed:@"加入 QQ 交流群" target:self set:nil get:nil detail:nil cell:@"PSButtonCell" edit:nil];
+        PSSpecifier *button = [PSSpecifier preferenceSpecifierNamed:@"加入 QQ 交流群" target:self set:nil get:nil detail:nil cell:PSCellTypeButton edit:nil];
         [button setProperty:@"joinQQGroup" forKey:@"action"];
         [array addObject:button];
         
@@ -67,7 +67,7 @@
         [group3 setProperty:@"公众号：施主见谅" forKey:@"footerText"];
         [array addObject:group3];
         
-        _specifiers = [array retain];
+        _specifiers = array;
     }
     return _specifiers;
 }
