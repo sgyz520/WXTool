@@ -13,16 +13,21 @@ TWEAK_NAME = WXTool
 
 # Feature flags (add -DENABLE_XXX to enable a feature)
 WXTool_CFLAGS = -fobjc-arc \
-                -DVERSION_STRING=\"$(PACKAGE_VERSION)\" \
-                -DENABLE_MEDIA_STACK \
-                -DENABLE_ANTI_RECALL
+                -DVERSION_STRING=\"$(PACKAGE_VERSION)\"
 
-WXTool_FILES = Tweak.x \
-               features/MediaStack.x \
-               features/AntRecall.x
+WXTool_FILES = Tweak.x EntryController.x
+
+WXTool_FRAMEWORKS = UIKit
+WXTool_PRIVATE_FRAMEWORKS = Preferences
 
 include $(THEOS)/makefiles/common.mk
 include $(THEOS_MAKE_PATH)/tweak.mk
+
+WXTool_INSTALL_PATH = /Library/PreferenceBundles
+WXTool_EXTRA_INSTALL_STAGES = bundle
+
+internal-after-install::
+	install.exec "killall -9 SpringBoard"
 
 THEOS_DEVICE_IP = 192.168.31.227
 THEOS_DEVICE_PORT = 22

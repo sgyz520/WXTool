@@ -10,6 +10,16 @@ WeChat enhancement tweak for iOS.
 |------|------|------|
 | 图片堆叠 | 强制开启微信图片堆叠发送与显示 | ✅ |
 | 消息防撤回 | 阻止对方撤回消息，保留聊天记录 | ✅ |
+| 设置入口 | 在微信设置中显示 WXTool 配置页面 | ✅ |
+
+## 使用说明
+
+安装后，在 **微信 → 设置** 页面底部可以找到 **WXTool** 入口。
+
+在设置页面可以：
+- 单独开关每个功能
+- 查看插件版本信息
+- 加入 QQ 交流群
 
 ## 版本兼容
 
@@ -20,11 +30,13 @@ WeChat enhancement tweak for iOS.
 
 ```
 WXTool/
-├── Tweak.x                  # 入口点
+├── Tweak.x                  # 主入口点（Hook 逻辑）
+├── EntryController.x        # 设置界面控制器
 ├── WCMediaStack.h           # 公共头文件（日志、常量、版本标记）
-├── features/
-│   ├── MediaStack.x         # 图片堆叠功能
-│   └── AntRecall.x          # 消息防撤回功能
+├── Resources/
+│   ├── entry.plist          # 设置入口配置
+│   ├── Root.plist           # 设置界面布局
+│   └── icon.png             # 插件图标
 ├── .github/workflows/
 │   └── build.yml            # GitHub Actions 自动打包
 ├── Makefile                 # Theos 构建配置
