@@ -55,9 +55,89 @@ static void loadSettings() {
 
 %end
 
+// Hook 所有 UIViewController 来找到微信设置页面
+%hook UIViewController
+
+- (void)viewDidLoad {
+    %orig;
+    
+    NSString *className = NSStringFromClass([self class]);
+    NSString *title = self.title ? self.title : @"(no title)";
+    
+    NSLog(@"[WXTool] UIViewController loaded: %@, title: %@", className, title);
+    
+    // 检查是否是设置页面
+    if ([title containsString:@"设置"] || [title containsString:@"Setting"] || 
+        [className containsString:@"Setting"] || [className containsString:@"setting"]) {
+        NSLog(@"[WXTool] ✓ Found possible settings page: %@", className);
+        [self tryAddWXToolEntry];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    %orig;
+    
+    NSString *className = NSStringFromClass([self class]);
+    NSString *title = self.title ? self.title : @"(no title)";
+    
+    NSLog(@"[WXTool] UIViewController appearing: %@, title: %@", className, title);
+}
+
+- (void)tryAddWXToolEntry {
+    @try {
+        NSLog(@"[WXTool] Trying to add WXTool entry to: %@", NSStringFromClass([self class]));
+        
+        // 尝试找到 navigationController
+        if (self.navigationController) {
+            NSLog(@"[WXTool] Has navigationController");
+        }
+        
+        // 查找 tableView
+        UITableView *tableView = nil;
+        for (UIView *subview in self.view.subviews) {
+            if ([subview isKindOfClass:[UITableView class]]) {
+                tableView = (UITableView *)subview;
+                NSLog(@"[WXTool] Found tableView in view");
+                break;
+            }
+        }
+        
+        // 如果没找到，尝试更深入查找
+        if (!tableView) {
+            tableView = [self findTableViewInView:self.view];
+            if (tableView) {
+                NSLog(@"[WXTool] Found tableView by deep search");
+            }
+        }
+        
+        if (tableView) {
+            NSLog(@"[WXTool] TableView class: %@, dataSource: %@, delegate: %@", 
+                  NSStringFromClass([tableView class]), 
+                  tableView.dataSource ? NSStringFromClass([tableView.dataSource class]) : @"(null)",
+                  tableView.delegate ? NSStringFromClass([tableView.delegate class]) : @"(null)");
+        }
+        
+    } @catch (NSException *exception) {
+        NSLog(@"[WXTool] Error in tryAddWXToolEntry: %@", exception);
+    }
+}
+
+- (UITableView *)findTableViewInView:(UIView *)view {
+    if ([view isKindOfClass:[UITableView class]]) {
+        return (UITableView *)view;
+    }
+    for (UIView *subview in view.subviews) {
+        UITableView *found = [self findTableViewInView:subview];
+        if (found) return found;
+    }
+    return nil;
+}
+
+%end
+
 %ctor {
     loadSettings();
-    
+
     NSLog(@"+--------------------------------+");
     NSLog(@"| WXTool v%-21s |", VERSION_STRING);
     NSLog(@"| WeChat: %-19s |", [WC_SUPPORTED_WECHAT_VERSION UTF8String]);
@@ -67,6 +147,7 @@ static void loadSettings() {
     NSLog(@"[WXTool] ✓ Hook targets:");
     NSLog(@"[WXTool]   - MsgMediaGroupMgr::enableFlag");
     NSLog(@"[WXTool]   - CMessageMgr::onRevokeMsg/onRevokeMessage/RevokeMsg");
+    NSLog(@"[WXTool]   - SettingsTableViewController (for settings entry)");
     
     Class prefsClass = NSClassFromString(@"WXRootListController");
     if (prefsClass) {
