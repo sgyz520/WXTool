@@ -74,21 +74,13 @@ static void loadSettings() {
         @try {
             NSLog(@"[WXTool] Trying to add WXTool entry to: %@", className);
             
-            // 查找 tableView
+            // 简单查找 tableView - 只找第一层
             UITableView *tableView = nil;
             for (UIView *subview in self.view.subviews) {
                 if ([subview isKindOfClass:[UITableView class]]) {
                     tableView = (UITableView *)subview;
                     NSLog(@"[WXTool] Found tableView in view");
                     break;
-                }
-            }
-            
-            // 如果没找到，尝试更深入查找
-            if (!tableView) {
-                tableView = [self _findTableViewInView:self.view];
-                if (tableView) {
-                    NSLog(@"[WXTool] Found tableView by deep search");
                 }
             }
             
@@ -112,17 +104,6 @@ static void loadSettings() {
     NSString *title = self.title ? self.title : @"(no title)";
     
     NSLog(@"[WXTool] UIViewController appearing: %@, title: %@", className, title);
-}
-
-- (UITableView *)_findTableViewInView:(UIView *)view {
-    if ([view isKindOfClass:[UITableView class]]) {
-        return (UITableView *)view;
-    }
-    for (UIView *subview in view.subviews) {
-        UITableView *found = [self _findTableViewInView:subview];
-        if (found) return found;
-    }
-    return nil;
 }
 
 %end
