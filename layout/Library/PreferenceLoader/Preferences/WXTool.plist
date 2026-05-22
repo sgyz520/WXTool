@@ -5,15 +5,17 @@
 	<key>entry</key>
 	<dict>
 		<key>bundle</key>
-		<string>WXToolPrefs</string>
+		<string>Preferences</string>
 		<key>cell</key>
 		<string>PSLinkCell</string>
 		<key>detail</key>
-		<string>WXRootListController</string>
+		<string>PSListController</string>
 		<key>icon</key>
 		<string>icon.png</string>
 		<key>label</key>
 		<string>WXTool</string>
+		<key>plist</key>
+		<string>WXTool/Root</string>
 	</dict>
 </dict>
 </plist>
