@@ -1,10 +1,6 @@
 #import "WCMediaStack.h"
 #import <UIKit/UIKit.h>
 
-// Forward declaration for the settings view controller defined in the bundle
-@interface WXRootListController : UIViewController
-@end
-
 static BOOL enableMediaStack = YES;
 static BOOL enableAntiRecall = YES;
 
@@ -125,8 +121,14 @@ static void loadSettings() {
     if (indexPath.section == 0 && indexPath.row == 0) {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         
-        WXRootListController *settingsVC = [[WXRootListController alloc] init];
-        [self.hostVC.navigationController pushViewController:settingsVC animated:YES];
+        // 动态获取 WXRootListController 类（定义在 bundle 中）
+        Class settingsClass = NSClassFromString(@"WXRootListController");
+        if (settingsClass) {
+            UIViewController *settingsVC = [[settingsClass alloc] init];
+            [self.hostVC.navigationController pushViewController:settingsVC animated:YES];
+        } else {
+            NSLog(@"[WXTool]  WXRootListController class not found");
+        }
         return;
     }
     
